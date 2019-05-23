@@ -57,4 +57,12 @@ Allow the `storage` folder to write to the web server side.
 
 ## Documentation
 
-WIP
+Check the [User Documentation](https://slim-sim.netlify.com/) for more details.
+
+
+## Donate
+
+**Paypal :** [My Paypal.me](https://www.paypal.me/simonmicheneau)<br>
+**Bitcoin (BTC) :** `1FKEgkLZGDCMUWb4f1yCGUwGavMqLsXy4E`<br>
+**Stellar Lumens (XLM) :** `GBWQJXMHCRWRPARIQGQDQWZNW2C5LROKYJSJ5SDUBMV5MQUQ7OJHKOZT`<br>
+**Cardano (ADA) :** `DdzFFzCqrhtCffmpXJhdn93q2yXq1AmJpiocKehwSsEshxDd2rJxonhFnhvpEUwurVJvkD98hmyka7fT3WtwH5G5Y93xZfjjDjsTzryp`
