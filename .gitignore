@@ -1,0 +1,13 @@
+.idea/*
+composer.lock
+composer.phar
+vendor/*
+storage/cache/*
+storage/logs/*
+.env
+!storage/cache/.gitkeep
+!storage/logs/.gitkeep
+node_modules/*
+package-lock.json
+docker/mysql
+docker/nginx/logs

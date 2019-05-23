@@ -1,0 +1,30 @@
+nginx:
+  image: nginx
+  restart: always
+  ports:
+    - "8080:80"
+  volumes:
+    - ${PWD}/docker/nginx/sites:/etc/nginx/conf.d
+    - ${PWD}/docker/nginx/logs:/var/log/nginx
+    - ${PWD}:/var/www/slim-sim
+  links:
+    - php:php
+    - mysql:mysql
+
+php:
+  build: docker/php
+  restart: always
+  volumes:
+    - ${PWD}:/var/www/slim-sim
+    - ${PWD}/docker/php/php.ini:/usr/local/etc/php/php.ini
+  links:
+    - mysql:mysql
+
+mysql:
+  image: mysql
+  restart: always
+  volumes:
+    - ${PWD}/docker/mysql:/var/lib/mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=slim

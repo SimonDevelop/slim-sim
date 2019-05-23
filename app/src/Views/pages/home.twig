@@ -1,0 +1,20 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+<h1 id="titleExemple">{{ "title"|trans }}</h1>
+<p>{{ "greet"|trans({':name': user}) }}</p>
+<div id="logo"></div>
+<p>Voir dans la console et home.twig la génération d'une route slim coté javascript</p>
+
+{% endblock %}
+
+{# Exemple RouterJS #}
+{% block javascript %}
+  {{ parent() }}
+  <script type="text/javascript">
+    var name = "marcus";
+    var url = Slim.Router.pathFor('hello', {name: name});
+    console.log(url)
+  </script>
+{% endblock %}

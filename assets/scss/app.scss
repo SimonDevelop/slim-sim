@@ -1,0 +1,14 @@
+$color: #2eb82e;
+$size: 3rem;
+$img: url(./../img/logo.png);
+
+#titleExemple {
+    color: $color;
+    font-size: $size;
+}
+
+#logo {
+    height: 221px;
+    width: 202px;
+    background: $img;
+}

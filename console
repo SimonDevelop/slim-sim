@@ -1,0 +1,96 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/vendor/autoload.php';
+use Symfony\Component\Console\Application;
+
+if (isset($argv[1])) {
+    $application = new Application('Console');
+
+    $CacheClearCommand = new \Commands\CacheClear();
+    $GenerateController = new \Commands\GenerateController();
+    $GenerateMiddleware = new \Commands\GenerateMiddleware();
+    $GenerateEntity = new \Commands\GenerateEntity();
+    $GenerateFixture = new \Commands\GenerateFixture();
+    $DataFixtures = new \Commands\DataFixtures();
+    $DataFixture = new \Commands\DataFixture();
+
+    $application->add($CacheClearCommand);
+    $application->add($GenerateController);
+    $application->add($GenerateMiddleware);
+    $application->add($GenerateEntity);
+    $application->add($GenerateFixture);
+    $application->add($DataFixtures);
+    $application->add($DataFixture);
+    $application->run();
+} else {
+    if (class_exists('\PhpSchool\CliMenu\Builder\CliMenuBuilder')) {
+        $menu = (new PhpSchool\CliMenu\Builder\CliMenuBuilder)
+            ->setTitle('Slim-Sim Menu')
+            ->setExitButtonText("Quitter")
+            ->setUnselectedMarker(' ')
+            ->setSelectedMarker('>')
+            ->setBackgroundColour('black')
+            ->setForegroundColour('white')
+            ->addItem('Vider le cache', function (PhpSchool\CliMenu\CliMenu $menu) {
+                $menu->close();
+                system('php '.__DIR__.'/console cache:clear');
+            })
+            ->addSubMenu('Générer un fichier', function (PhpSchool\CliMenu\Builder\CliMenuBuilder $b) {
+                $b->setTitle('Slim-Sim Menu > Générer un fichier')
+                    ->setExitButtonText("Quitter")
+                    ->addItem('Générer un Controller', function (PhpSchool\CliMenu\CliMenu $menu) {
+                        $menu->close();
+                        echo "Veuillez indiquer le nom du contrôleur : ";
+                        $handle = fopen("php://stdin", "r");
+                        $line = fgets($handle);
+                        system('php '.__DIR__.'/console generate:controller '.trim($line));
+                    })
+                    ->addItem('Générer un Middleware', function (PhpSchool\CliMenu\CliMenu $menu) {
+                        $menu->close();
+                        echo "Veuillez indiquer le nom du middleware : ";
+                        $handle = fopen("php://stdin", "r");
+                        $line = fgets($handle);
+                        system('php '.__DIR__.'/console generate:middleware '.trim($line));
+                    })
+                    ->addItem('Générer une Entity', function (PhpSchool\CliMenu\CliMenu $menu) {
+                        $menu->close();
+                        echo "Veuillez indiquer le nom de l'entité : ";
+                        $handle = fopen("php://stdin", "r");
+                        $line = fgets($handle);
+                        system('php '.__DIR__.'/console generate:entity '.trim($line));
+                    })
+                    ->addItem('Générer une Fixture', function (PhpSchool\CliMenu\CliMenu $menu) {
+                        $menu->close();
+                        echo "Veuillez indiquer le nom de la fixture : ";
+                        $handle = fopen("php://stdin", "r");
+                        $line = fgets($handle);
+                        system('php '.__DIR__.'/console generate:fixture '.trim($line));
+                    })
+                    ->setGoBackButtonText("Retour");
+            })
+            ->addSubMenu('Doctrine', function (PhpSchool\CliMenu\Builder\CliMenuBuilder $b) {
+                $b->setTitle('Slim-Sim Menu > Doctrine')
+                  ->setExitButtonText("Quitter")
+                  ->addItem('Mettre à jour les tables', function (PhpSchool\CliMenu\CliMenu $menu) {
+                      $menu->close();
+                      system('php '.__DIR__.'/vendor/bin/doctrine orm:schema-tool:update --force');
+                  })
+                  ->addItem('Purger la base et envoyer les fixtures', function (PhpSchool\CliMenu\CliMenu $menu) {
+                      $menu->close();
+                      system('php '.__DIR__.'/console data:fixtures');
+                  })
+                  ->addItem('Envoyer une fixture sans purger la base', function (PhpSchool\CliMenu\CliMenu $menu) {
+                      $menu->close();
+                      echo "Veuillez indiquer le nom de la fixture : ";
+                      $handle = fopen("php://stdin", "r");
+                      $line = fgets($handle);
+                      system('php '.__DIR__.'/console data:fixture '.trim($line));
+                  })
+                  ->setGoBackButtonText("Retour");
+            })
+            ->build();
+
+        $menu->open();
+    }
+}
