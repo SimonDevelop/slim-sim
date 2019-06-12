@@ -60,12 +60,12 @@ class BaseTestCase extends TestCase
         $app = new App();
 
         // Set up dependencies
-        require_once dirname(__DIR__, 2).'/config/container.php';
+        require dirname(__DIR__, 2).'/config/container.php';
 
         // Register middleware
         if ($this->withMiddleware) {
             $_SESSION = [];
-            require_once dirname(__DIR__, 2).'/config/middlewares.php';
+            require dirname(__DIR__, 2).'/config/middlewares.php';
         }
 
         // RouterJS
@@ -75,7 +75,7 @@ class BaseTestCase extends TestCase
         })->setName('routerjs');
 
         // Register routes
-        require_once dirname(__DIR__, 2).'/config/routes.php';
+        require dirname(__DIR__, 2).'/config/routes.php';
 
         // Process the application
         $response = $app->process($request, $response);
