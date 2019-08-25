@@ -1,31 +1,32 @@
 language: php
 
+services:
+  - mysql
+
 matrix:
   include:
-    - php: 7.1
+    - php: 7.2
       node_js: 6
-      env: DB=maria
     - php: 7.2
       node_js: 7
-      env: DB=mysql
     - php: 7.2
       node_js: 8
-      env: DB=postgresql
     - php: 7.2
       node_js: 9
-      env: DB=sqlite3
     - php: 7.2
       node_js: 10
     - php: 7.3
       node_js: 11
+    - php: 7.3
+      node_js: 12
 
 install:
   - composer selfupdate
   - composer install
 
 before_script:
-  - chmod -R 777 storage && chmod +x .travis/setup.sh
-  - .travis/setup.sh
+  - chmod -R 777 storage && cp .travis/.env.mysql .env
+  - mysql -e 'CREATE DATABASE sim_prod;'
   - php vendor/bin/doctrine orm:schema-tool:update --force
   - php console data:fixtures
   - npm install
