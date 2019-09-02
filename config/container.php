@@ -39,8 +39,8 @@ $container['view'] = function ($container) {
         'debug' => true
     ]);
 
-    $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-    $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+    $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
+    $view->addExtension(new Slim\Views\TwigExtension($container['router'], $uri));
     if (getenv('ENV') == 'dev') {
         $view->addExtension(new Twig_Extension_Profiler($container['twig_profile']));
         $view->addExtension(new Twig_Extension_Debug());
