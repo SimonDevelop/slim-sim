@@ -3,12 +3,13 @@ namespace App\Controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Container\ContainerInterface;
 
 class Controller
 {
-    private $container;
+    protected $container;
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
@@ -20,19 +21,17 @@ class Controller
 
     public function alert($message, $type = "success")
     {
-        if (!$this->session->has('alert')) {
-            $this->session->set('alert', []);
+        if (!isset($_SESSION['alert2'])) {
+            $_SESSION['alert2'] = [];
         }
-        return $this->session->add([
-            'alert' => [$type => $message]
-        ]);
+        $_SESSION['alert2'][$type] = $message;
     }
 
     public function tokenCheck($token)
     {
-        if (!$this->session->has('token')) {
+        if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
             return false;
-        } elseif ($this->session->get('token') === $token) {
+        } elseif ($_SESSION['token'] === $token) {
             return true;
         } else {
             return false;
@@ -41,15 +40,17 @@ class Controller
 
     public function render(ResponseInterface $response, $file, $params = [])
     {
-        $this->container->view->render($response, $file, $params);
+        return $this->container->get("view")->render($response, $file, $params);
     }
 
     public function redirect(ResponseInterface $response, $name, $status = 302, $params = [])
     {
         if (empty($params)) {
-            return $response->withStatus($status)->withHeader('Location', $this->router->pathFor($name));
+            return $response->withHeader('Location', $this->container->get("router")->urlFor($name))
+                ->withStatus($status);
         } else {
-            return $response->withStatus($status)->withHeader('Location', $this->router->pathFor($name, $params));
+            return $response->withHeader('Location', $this->container->get("router")->urlFor($name, $params))
+                ->withStatus($status);
         }
     }
 }

@@ -11,15 +11,14 @@ class HomeController extends Controller
         if ($request->getAttribute('name')) {
             $user = $request->getAttribute('name');
         } else {
-            // Exemple session helper
-            if (!$this->session->has('user')) {
-                $this->session->set('user', 'John');
+            if (!isset($_SESSION["user"])) {
+                $_SESSION["user"] = "John";
             }
-            $user = $this->session->get('user');
+            $user = $_SESSION["user"];
         }
 
         // Passer en langue française (un second rafraichissement est necessaire)
-        // $this->session->set('lang', 'fr');
+        // $_SESSION["lang"] = "fr";
 
         // Exemple doctrine
         // $users = $this->em->getRepository('App\Entity\User')->queryGetUsers();
@@ -28,14 +27,14 @@ class HomeController extends Controller
         $this->logger->addInfo("Bienvenue ".$user);
 
         // Exemple d'alerte
-        if ($this->session->has('lang') && $this->session->get('lang') == "fr") {
+        if (isset($_SESSION["lang"]) && $_SESSION["lang"] == "fr") {
             $this->alert(["Ceci est un message d'alerte de test"], 'danger');
         } else {
             $this->alert(["This is a test alert message"], 'danger');
         }
 
         $params = compact("user");
-        $this->render($response, 'pages/home.twig', $params);
+        return $this->render($response, 'pages/home.twig', $params);
     }
 
     public function postHome(RequestInterface $request, ResponseInterface $response)

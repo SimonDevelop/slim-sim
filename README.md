@@ -1,5 +1,5 @@
-[![version](https://img.shields.io/badge/Version-1.0.3-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/1.0.3)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1.3-8892BF.svg)](https://php.net/)
+[![version](https://img.shields.io/badge/Version-2.0.0-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.0.0)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
 [![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%206.11.5-brightgreen.svg)](https://nodejs.org/en/)
 [![Build Status](https://travis-ci.org/SimonDevelop/slim-sim.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-sim)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-sim/blob/master/LICENSE)
@@ -22,11 +22,8 @@ For all contributions on github, please read the document [CONTRIBUTING.md](http
 - [phpdotenv](https://github.com/vlucas/phpdotenv) for the configuration of the environment.
 - [console](https://github.com/symfony/console) for terminal commands.
 - [monolog](https://github.com/Seldaek/monolog) to manage logs.
-- [runtracy](https://github.com/runcmf/runtracy) for a profiler.
-- [slim-secure-session-middleware](https://github.com/adbario/slim-secure-session-middleware) helpers for session management.
 - [translation](https://github.com/symfony/translation) for the multilingual system.
 - [webpack](https://github.com/webpack/webpack) for compilation and minification of files scss/sass/css/js.
-- [slim-router-js](https://github.com/llvdl/slim-router-js) url generator slim in javascript code.
 - [cli-menu](https://github.com/php-school/cli-menu) for execute commands from a menu in your terminal.
 
 #### NOTE
@@ -57,12 +54,6 @@ Allow the `storage` folder to write to the web server side.
 
 ## Documentation
 
-Check the [User Documentation](https://slim-sim.netlify.com/) for more details.
+See the [User Documentation](https://slim-sim.netlify.com/) for more details.
 
-
-## Donate
-
-**Paypal :** [My Paypal.me](https://www.paypal.me/simonmicheneau)<br>
-**Bitcoin (BTC) :** `1FKEgkLZGDCMUWb4f1yCGUwGavMqLsXy4E`<br>
-**Stellar Lumens (XLM) :** `GBWQJXMHCRWRPARIQGQDQWZNW2C5LROKYJSJ5SDUBMV5MQUQ7OJHKOZT`<br>
-**Cardano (ADA) :** `DdzFFzCqrhtCffmpXJhdn93q2yXq1AmJpiocKehwSsEshxDd2rJxonhFnhvpEUwurVJvkD98hmyka7fT3WtwH5G5Y93xZfjjDjsTzryp`
+You using 1.x version ? See this [User Documentation](https://slim-sim-v1.netlify.com/).

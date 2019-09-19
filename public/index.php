@@ -1,20 +1,34 @@
 <?php
 
 if (PHP_SAPI == 'cli-server') {
-    // To help the built-in PHP dev server, check if the request was actually for
-    // something which should probably be served as a static file
     $url  = parse_url($_SERVER['REQUEST_URI']);
     $file = __DIR__ . $url['path'];
-    if (is_file($file)) {
+
+    // check the file types, only serve standard files
+    if (preg_match('/\.(?:png|js|jpg|jpeg|gif|css)$/', $file)) {
+        // does the file exist? If so, return it
+        if (is_file($file))
+            return false;
+
+        // file does not exist. return a 404
+        header($_SERVER['SERVER_PROTOCOL'].' 404 Not Found');
+        printf('"%s" does not exist', $_SERVER['REQUEST_URI']);
         return false;
     }
 }
 
+use DI\Container;
+use Slim\Factory\AppFactory;
+use Dotenv\Dotenv;
+
+// Set the absolute path to the root directory.
+$rootPath = realpath(dirname(__DIR__));
+
 // Autoload de composer
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require $rootPath . '/vendor/autoload.php';
 
 // Initialisation du .env
-$dotenv = \Dotenv\Dotenv::create(dirname(__DIR__));
+$dotenv = Dotenv::create($rootPath);
 $dotenv->load(true);
 
 // Initialisation session
@@ -22,72 +36,37 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Initialisation de Slim en fonction de l'environnement de développement
+// Environnement
 if (getenv('ENV') == 'dev') {
-    error_reporting(-1);
     ini_set('display_errors', 'On');
     ini_set('display_startup_errors', 'On');
     ini_set('log_errors', 'On');
-    RunTracy\Helpers\Profiler\Profiler::enable();
-
-    RunTracy\Helpers\Profiler\Profiler::start('loadSettings');
-    $c = require_once dirname(__DIR__).'/config/tracy.php';
-    RunTracy\Helpers\Profiler\Profiler::finish('loadSettings');
-
-    RunTracy\Helpers\Profiler\Profiler::start('initApp');
-    $app = new \Slim\App($c);
-    RunTracy\Helpers\Profiler\Profiler::finish('initApp');
-
-    // Register dependencies
-    RunTracy\Helpers\Profiler\Profiler::start('RegisterDependencies');
-    require_once dirname(__DIR__).'/config/container.php';
-    RunTracy\Helpers\Profiler\Profiler::finish('RegisterDependencies');
-
-    // Register middleware
-    RunTracy\Helpers\Profiler\Profiler::start('RegisterMiddlewares');
-    require_once dirname(__DIR__).'/config/middlewares.php';
-    RunTracy\Helpers\Profiler\Profiler::finish('RegisterMiddlewares');
-
-    // Register routes
-    RunTracy\Helpers\Profiler\Profiler::start('RegisterRoutes');
-    // RouterJS (générer des routes slim coté javascript)
-    $app->get('/routerjs', function ($req, $res, $args) {
-        $routerJs = new \Llvdl\Slim\RouterJs($this->router, false);
-        return $routerJs->getRouterJavascriptResponse();
-    })->setName('routerjs');
-
-    // Le fichier ou l'on déclare les routes
-    require_once dirname(__DIR__).'/config/routes.php';
-    RunTracy\Helpers\Profiler\Profiler::finish('RegisterRoutes');
-
-    require_once dirname(__DIR__).'/config/error_pages.php';
-
-    // Run app
-    RunTracy\Helpers\Profiler\Profiler::start('runApp, %s, line %s', basename(__FILE__), __LINE__);
-    $app->run();
-    RunTracy\Helpers\Profiler\Profiler::finish('runApp, %s, line %s', basename(__FILE__), __LINE__);
+    $displayErrors = true;
 } else {
-    $app = new \Slim\App([
-        'translations_path' => dirname(__DIR__).'/config/translations/'
-    ]);
-
-    // Le container qui compose nos librairies
-    require_once dirname(__DIR__).'/config/container.php';
-
-    // Appel des middlewares
-    require_once dirname(__DIR__).'/config/middlewares.php';
-
-    // RouterJS (générer des routes slim coté javascript)
-    $app->get('/routerjs', function ($req, $res, $args) {
-        $routerJs = new \Llvdl\Slim\RouterJs($this->router);
-        return $routerJs->getRouterJavascriptResponse();
-    })->setName('routerjs');
-
-    // Le fichier ou l'on déclare les routes
-    require_once dirname(__DIR__).'/config/routes.php';
-
-    require_once dirname(__DIR__).'/config/error_pages.php';
-
-    // Execution de Slim
-    $app->run();
+    ini_set('display_errors', 'off');
+    ini_set('display_startup_errors', 'off');
+    ini_set('log_errors', 'off');
+    $displayErrors = false;
 }
+
+// Create Container
+$container = new Container();
+AppFactory::setContainer($container);
+
+// Create App
+$app = AppFactory::create();
+$app->addRoutingMiddleware();
+$app->addBodyParsingMiddleware();
+$app->addErrorMiddleware($displayErrors, false, false);
+
+// Le container qui compose nos librairies
+require $rootPath . '/config/container.php';
+
+// Appel des middlewares
+require $rootPath . '/config/middlewares.php';
+
+// Le fichier ou l'on déclare les routes
+require $rootPath . '/config/routes.php';
+
+// Execution de Slim
+$app->run();

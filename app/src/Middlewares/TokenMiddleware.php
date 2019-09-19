@@ -1,30 +1,27 @@
 <?php
+
 namespace App\Middlewares;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface as Middleware;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class TokenMiddleware
+class TokenMiddleware implements Middleware
 {
-    private $twig;
     private $container;
 
-    public function __construct(\Twig_Environment $twig, $container)
+    public function __construct($container)
     {
-        $this->twig = $twig;
         $this->container = $container;
     }
 
-    public function __invoke(Request $request, Response $response, $next)
+    public function process(Request $request, RequestHandler $handler): Response
     {
-        if (!$this->container->session->has('token')) {
-            $this->container->session->set('token', uniqid());
+        if (!isset($_SESSION['token']) || empty($_SESSION['token'])) {
+            $_SESSION['token'] = uniqid();
         }
-        $this->twig->addGlobal('token', $this->container->session->get('token'));
-        $response = $next($request, $response);
-        if ($response->getStatusCode() === 400) {
-            $this->container->session->set('token', $request->getParams());
-        }
-        return $response;
+        $this->container->get("view")->getEnvironment()->addGlobal('token', $_SESSION['token']);
+        return $handler->handle($request);
     }
 }
