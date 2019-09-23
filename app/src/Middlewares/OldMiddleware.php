@@ -1,34 +1,28 @@
 <?php
 namespace App\Middlewares;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\MiddlewareInterface as Middleware;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-class OldMiddleware
+class OldMiddleware implements Middleware
 {
-    private $twig;
     private $container;
 
-    public function __construct(\Twig_Environment $twig, $container)
+    public function __construct($container)
     {
-        $this->twig = $twig;
         $this->container = $container;
     }
 
-    public function __invoke(Request $request, Response $response, $next)
+    public function process(Request $request, RequestHandler $handler): Response
     {
-        $this->twig->addGlobal(
-            'old',
-            $this->container->session->has('old') ? $this->container->session->get('old') : []
-        );
-        if ($this->container->session->has('old')) {
-            $this->container->session->delete('old');
+        if (isset($_SESSION['old']) && !empty($_SESSION['old'])) {
+            $this->container->get("view")->getEnvironment()->addGlobal('old', $_SESSION['old']);
+            unset($_SESSION['old']);
+        } else {
+            $this->container->get("view")->getEnvironment()->addGlobal('old', []);
         }
-        $response = $next($request, $response);
-        if ($response->getStatusCode() === 400) {
-            $this->container->session->set('old', $request->getParams());
-            $response = $response->withStatus(302);
-        }
-        return $response;
+        return $handler->handle($request);
     }
 }
