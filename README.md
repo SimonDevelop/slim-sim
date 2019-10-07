@@ -1,6 +1,6 @@
-[![version](https://img.shields.io/badge/Version-2.0.0-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.0.0)
+[![version](https://img.shields.io/badge/Version-2.1.0-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.0)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
-[![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%206.11.5-brightgreen.svg)](https://nodejs.org/en/)
+[![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%2010-brightgreen.svg)](https://nodejs.org/en/)
 [![Build Status](https://travis-ci.org/SimonDevelop/slim-sim.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-sim)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-sim/blob/master/LICENSE)
 
@@ -16,6 +16,7 @@ For all contributions on github, please read the document [CONTRIBUTING.md](http
 - [twig-view](https://github.com/slimphp/Twig-View) for the views.
 - [doctrine](https://github.com/doctrine/doctrine2) for the database.
 - [data-fixtures](https://github.com/doctrine/data-fixtures) for the data fixture.
+- [migrations](https://github.com/doctrine/migrations) for the migrations of the database.
 - [validation](https://github.com/Respect/Validation) to validate the data.
 - [csrf](https://github.com/slimphp/Slim-Csrf) for form security.
 - [php-ref](https://github.com/digitalnature/php-ref) for an improved var_dump function.
@@ -29,7 +30,7 @@ For all contributions on github, please read the document [CONTRIBUTING.md](http
 #### NOTE
 [cli-menu](https://github.com/php-school/cli-menu) use php posix extension which is not supported on windows, remember to delete this line in composer.json if you are under windows :
 ```
-"php-school/cli-menu": "^3.0"
+"php-school/cli-menu": "^3.2"
 ```
 
 ## Installation
