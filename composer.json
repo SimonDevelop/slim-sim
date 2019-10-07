@@ -71,7 +71,7 @@
     "post-create-project-cmd": [
       "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
     ],
-    "start": "php -S localhost:8080 -t public public/index.php",
+    "start": "php -S localhost:8080 -t public public/server.php",
     "phpcs": "phpcs -s",
     "phpunit": "phpunit --colors",
     "test": [
