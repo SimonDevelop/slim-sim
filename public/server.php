@@ -15,7 +15,7 @@ if ($filePath && is_file($filePath)) {
     // 2. check for circular reference to router.php
     // 3. don't serve dotfiles
     if (strpos($filePath, __DIR__ . DIRECTORY_SEPARATOR) === 0 &&
-        $filePath != __DIR__ . DIRECTORY_SEPARATOR . 'router.php' &&
+        $filePath != __DIR__ . DIRECTORY_SEPARATOR . 'server.php' &&
         substr(basename($filePath), 0, 1) != '.'
     ) {
         if (strtolower(substr($filePath, -4)) == '.php') {
