@@ -46,7 +46,7 @@ jobs:
         run: mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS sim_prod;'
 
       - name: Copy settings
-        run: cp env.github .env
+        run: cp .env.github .env
 
       - name: Validate composer.json and composer.lock
         run: composer validate
