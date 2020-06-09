@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y \
         apt-utils \
@@ -27,11 +27,15 @@ RUN apt-get update && apt-get install -y \
         libssl-dev \
         libcurl3-dev \
         libxml2-dev \
-        libzip-dev
+        libzip-dev \
+        libonig-dev \
+        openssl \
+        zip \
+        unzip
 
-RUN docker-php-ext-install iconv json mbstring opcache intl bz2 mysqli pdo_mysql pdo_sqlite phar curl ftp hash session simplexml tokenizer xml xmlrpc zip \
-&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-&& docker-php-ext-install gd
+RUN docker-php-ext-install iconv json mbstring opcache intl bz2 mysqli pdo_mysql pdo_sqlite phar curl ftp session simplexml tokenizer xml xmlrpc zip
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+RUN docker-php-ext-install gd
 
 WORKDIR /var/www/slim-sim
 
