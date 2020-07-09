@@ -1,7 +1,6 @@
 [![version](https://img.shields.io/badge/Version-2.1.0-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.0)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
 [![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%2010-brightgreen.svg)](https://nodejs.org/en/)
-[![Build Status](https://travis-ci.org/SimonDevelop/slim-sim.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-sim)
 [![Github Actions NodeJS](https://github.com/SimonDevelop/slim-sim/workflows/NodeJS/badge.svg)](https://github.com/SimonDevelop/slim-sim/actions)
 [![Github Actions PHP](https://github.com/SimonDevelop/slim-sim/workflows/PHP/badge.svg)](https://github.com/SimonDevelop/slim-sim/actions)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-sim/blob/master/LICENSE)
