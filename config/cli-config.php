@@ -2,17 +2,17 @@
 
 require_once 'vendor/autoload.php';
 
-$dotenv = \Dotenv\Dotenv::create(dirname(__DIR__));
+$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load(true);
 
-if (getenv('ENV') == 'dev') {
+if ($_ENV["ENV"] == 'dev') {
     $db = "DB_DEV";
-} elseif (getenv('ENV') == 'prod') {
+} elseif ($_ENV["ENV"] == 'prod') {
     $db = "DB_PROD";
 }
 
 $doctrine = [
-    'url' => getenv($db)
+    'url' => $_ENV[$db]
 ];
 
 $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(

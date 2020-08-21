@@ -1,7 +1,6 @@
-[![version](https://img.shields.io/badge/Version-2.1.0-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.0)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
-[![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%2010-brightgreen.svg)](https://nodejs.org/en/)
-[![Build Status](https://travis-ci.org/SimonDevelop/slim-sim.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-sim)
+[![version](https://img.shields.io/badge/Version-2.1.1-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.1)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
+[![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%2012-brightgreen.svg)](https://nodejs.org/en/)
 [![Github Actions NodeJS](https://github.com/SimonDevelop/slim-sim/workflows/NodeJS/badge.svg)](https://github.com/SimonDevelop/slim-sim/actions)
 [![Github Actions PHP](https://github.com/SimonDevelop/slim-sim/workflows/PHP/badge.svg)](https://github.com/SimonDevelop/slim-sim/actions)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-sim/blob/master/LICENSE)
@@ -32,7 +31,7 @@ For all contributions on github, please read the document [CONTRIBUTING.md](http
 #### NOTE
 [cli-menu](https://github.com/php-school/cli-menu) use php posix extension which is not supported on windows, remember to delete this line in composer.json if you are under windows :
 ```
-"php-school/cli-menu": "^3.2"
+"php-school/cli-menu": "^4.0"
 ```
 
 ## Installation
@@ -57,6 +56,6 @@ Allow the `storage` folder to write to the web server side.
 
 ## Documentation
 
-See the [User Documentation](https://slim-sim.netlify.com/) for more details.
+See the [User Documentation](https://slim-sim.netlify.app/) for more details.
 
-You using 1.x version ? See this [User Documentation](https://slim-sim-v1.netlify.com/).
+You using 1.x version ? See this [User Documentation](https://slim-sim-v1.netlify.app/).

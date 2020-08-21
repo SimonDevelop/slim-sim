@@ -1,6 +1,6 @@
 name: PHP
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   run:
@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.1', '7.2', '7.3', '7.4']
+        php-versions: ['7.2', '7.3', '7.4']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     services:
@@ -19,19 +19,24 @@ jobs:
           MYSQL_DATABASE: sim_prod
           MYSQL_ALLOW_EMPTY_PASSWORD: true
         ports:
-          - 33306:3306
+          - 3306/tcp
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v1
+        uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extension-csv: mbstring, pdo, pdo_mysql, intl, zip
+          extensions: mbstring, xml, ctype, iconv, intl, zip, pdo, pdo_mysql, mysql
           coverage: none
-          pecl: false
+
+      - name: Start mysql service
+        run: sudo /etc/init.d/mysql start
+
+      - name: Create test table
+        run: mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS sim_prod;'
 
       - name: Check PHP Version
         run: php -v
@@ -41,9 +46,6 @@ jobs:
 
       - name: Check PHP Extensions
         run: php -m
-
-      - name: Create test table
-        run: mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS sim_prod;'
 
       - name: Copy settings
         run: cp .env.github .env

@@ -11,7 +11,7 @@ $rootPath = realpath(dirname(__DIR__));
 require $rootPath . '/vendor/autoload.php';
 
 // Initialisation du .env
-$dotenv = Dotenv::create($rootPath);
+$dotenv = Dotenv::createImmutable($rootPath);
 $dotenv->load(true);
 
 // Initialisation session
@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Environnement
-if (getenv('ENV') == 'dev') {
+if ($_ENV["ENV"] == 'dev') {
     ini_set('display_errors', 'On');
     ini_set('display_startup_errors', 'On');
     ini_set('log_errors', 'On');

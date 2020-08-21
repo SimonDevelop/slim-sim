@@ -30,7 +30,7 @@ class BaseTestCase extends PHPUnit_TestCase
         // Set the absolute path to the root directory.
         $rootPath = realpath(dirname(__DIR__, 2));
 
-        $dotenv = \Dotenv\Dotenv::create($rootPath);
+        $dotenv = \Dotenv\Dotenv::createImmutable($rootPath);
         $dotenv->load(true);
 
         // Create Container

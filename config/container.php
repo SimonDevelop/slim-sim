@@ -30,7 +30,7 @@ $container->set('view', function () use ($rootPath, $app) {
         'debug' => true
     ]);
 
-    if (getenv('ENV') == 'dev') {
+    if ($_ENV["ENV"] == 'dev') {
         $view->addExtension(new Twig_Extension_Debug());
     }
 
@@ -88,13 +88,13 @@ $container->set('logger', function () use ($rootPath) {
 
 // EntityManager de doctrine
 $container->set('em', function () use ($rootPath) {
-    if (getenv('ENV') == 'dev') {
+    if ($_ENV["ENV"] == 'dev') {
         $db = "DB_DEV";
-    } elseif (getenv('ENV') == 'prod') {
+    } elseif ($_ENV["ENV"] == 'prod') {
         $db = "DB_PROD";
     }
     $connection = [
-        'url' => getenv($db)
+        'url' => $_ENV[$db]
     ];
     $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
         ['app/src/Entity'],
