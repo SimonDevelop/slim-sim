@@ -5,9 +5,9 @@ function slim_env($var = null)
 {
     if (!is_null($var)) {
         if ($var === 'CACHE') {
-            return filter_var(getenv($var), FILTER_VALIDATE_BOOLEAN);
+            return filter_var($_ENV[$var], FILTER_VALIDATE_BOOLEAN);
         } elseif ($var === 'ENV') {
-            if (getenv($var) === 'dev') {
+            if ($_ENV[$var] === 'dev') {
                 return true;
             } else {
                 return false;

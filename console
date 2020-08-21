@@ -28,8 +28,6 @@ if (isset($argv[1])) {
         $menu = (new PhpSchool\CliMenu\Builder\CliMenuBuilder)
             ->setTitle('Slim-Sim Menu')
             ->setExitButtonText("Quitter")
-            ->setUnselectedMarker(' ')
-            ->setSelectedMarker('>')
             ->setBackgroundColour('black')
             ->setForegroundColour('white')
             ->addItem('Vider le cache', function (PhpSchool\CliMenu\CliMenu $menu) {

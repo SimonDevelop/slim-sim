@@ -32,12 +32,12 @@ class DataFixtures extends Command
      */
     private function getEntityManager()
     {
-        $dotenv = Dotenv::create(dirname(__DIR__, 2));
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load(true);
 
-        if (getenv('ENV') == 'dev') {
+        if ($_ENV["ENV"] == 'dev') {
             $db = "DB_DEV";
-        } elseif (getenv('ENV') == 'prod') {
+        } elseif ($_ENV["ENV"] == 'prod') {
             $db = "DB_PROD";
         }
 
@@ -51,7 +51,7 @@ class DataFixtures extends Command
 
             // define credentials...
             $connectionOptions = [
-                'url' => getenv($db)
+                'url' => $_ENV[$db]
             ];
 
             $driver = new AnnotationDriver(new AnnotationReader(), $settings['path']);
