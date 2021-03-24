@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/Version-2.1.2-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.2)
+[![version](https://img.shields.io/badge/Version-2.1.3-brightgreen.svg)](https://github.com/SimonDevelop/slim-sim/releases/tag/2.1.3)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 [![Minimum Node Version](https://img.shields.io/badge/node-%3E%3D%2012-brightgreen.svg)](https://nodejs.org/en/)
 [![Github Actions NodeJS](https://github.com/SimonDevelop/slim-sim/workflows/NodeJS/badge.svg)](https://github.com/SimonDevelop/slim-sim/actions)
