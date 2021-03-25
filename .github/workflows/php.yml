@@ -8,12 +8,12 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-latest]
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.4']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: sim_prod
